@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand" href="/">EduSphere</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <% if (user) { %>
+          <% if (user.role === 'teacher') { %>
+            <li class="nav-item"><a class="nav-link" href="/dashboard/teacher">Dasbor Guru</a></li>
+            <li class="nav-item"><a class="nav-link" href="/courses/create">Buat Kelas</a></li>
+          <% } else { %>
+            <li class="nav-item"><a class="nav-link" href="/courses">Katalog Kelas</a></li>
+            <li class="nav-item"><a class="nav-link" href="/enrollments">Kelas Saya</a></li>
+          <% } %>
+        <% } %>
+      </ul>
+      <ul class="navbar-nav">
+        <% if (user) { %>
+          <li class="nav-item"><a class="nav-link text-white" href="/logout"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+        <% } else { %>
+          <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="/register">Daftar</a></li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>

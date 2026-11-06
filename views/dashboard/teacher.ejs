@@ -1,0 +1,53 @@
+<%- include('../layouts/header'); %>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2><i class="bi bi-chalkboard-teacher"></i> Dasbor Guru</h2>
+  <a href="/courses/create" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Buat Kelas Baru</a>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card shadow">
+      <div class="card-header"><h5>Kelas yang Anda Kelola</h5></div>
+      <div class="card-body">
+        <% if (courses && courses.length > 0) { %>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>#</th>
+                  <th>Judul Kelas</th>
+                  <th>Deskripsi</th>
+                  <th>Dibuat</th>
+                  <th class="text-end">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% courses.forEach((course, index) => { %>
+                  <tr>
+                    <td><%= index + 1 %></td>
+                    <td><strong><%= course.title %></strong></td>
+                    <td><%= course.description || '-' %></td>
+                    <td><%= course.created_at %></td>
+                    <td class="text-end">
+                      <a href="/courses/<%= course.id %>" class="btn btn-sm btn-info">Lihat</a>
+                      <a href="/courses/<%= course.id %>/edit" class="btn btn-sm btn-warning">Edit</a>
+                      <form action="/courses/<%= course.id %>?_method=DELETE" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus kelas ini?');">
+                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                      </form>
+                    </td>
+                  </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+        <% } else { %>
+          <div class="text-center py-4">
+            <i class="bi bi-folder2-open display-4 text-muted"></i>
+            <p class="mt-2 text-muted">Belum ada kelas. Buat kelas pertama Anda.</p>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../layouts/footer'); %>

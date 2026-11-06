@@ -1,0 +1,27 @@
+<%- include('../layouts/header'); %>
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card shadow">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"><i class="bi bi-plus-lg"></i> Buat Kelas Baru</h5>
+      </div>
+      <div class="card-body">
+        <form action="/courses/create" method="POST">
+          <div class="mb-3">
+            <label class="form-label">Judul Kelas</label>
+            <input type="text" name="title" class="form-control" required placeholder="contoh: Matematika Dasar">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Deskripsi</label>
+            <textarea name="description" class="form-control" rows="4" placeholder="Deskripsi materi kelas"></textarea>
+          </div>
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Simpan Kelas</button>
+            <a href="/dashboard/teacher" class="btn btn-secondary">Batal</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../layouts/footer'); %>

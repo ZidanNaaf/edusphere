@@ -1,0 +1,36 @@
+<%- include('../layouts/header'); %>
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-5">
+    <div class="card shadow">
+      <div class="card-header bg-success text-white">
+        <h4 class="mb-0"><i class="bi bi-person-plus"></i> Registrasi Akun</h4>
+      </div>
+      <div class="card-body">
+        <form action="/register" method="POST">
+          <div class="mb-3">
+            <label class="form-label">Nama Lengkap</label>
+            <input type="text" name="name" class="form-control" required placeholder="nama lengkap">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" required placeholder="email">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" required placeholder="password">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Peran</label>
+            <select name="role" class="form-select" required>
+              <option value="student">Siswa</option>
+              <option value="teacher">Guru</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-success w-100">Daftar</button>
+        </form>
+        <p class="mt-3 text-center">Sudah punya akun? <a href="/login">Masuk di sini</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../layouts/footer'); %>

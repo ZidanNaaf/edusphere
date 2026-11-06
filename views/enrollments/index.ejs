@@ -1,0 +1,27 @@
+<%- include('../layouts/header'); %>
+<h2><i class="bi bi-book-half"></i> Kelas Saya</h2>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  <% if (courses && courses.length > 0) { %>
+    <% courses.forEach((course) => { %>
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title"><%= course.title %></h5>
+            <p class="card-text"><%= course.description || '-' %></p>
+            <p class="small text-muted">Pengajar: <%= course.teacher_name %></p>
+          </div>
+          <div class="card-footer bg-transparent">
+            <a href="/courses/<%= course.id %>" class="btn btn-sm btn-outline-primary w-100">Lihat Detail</a>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+  <% } else { %>
+    <div class="col-12 text-center py-5">
+      <i class="bi bi-folder2-open display-4 text-muted"></i>
+      <p class="mt-2">Belum ada kelas yang diikuti.</p>
+      <a href="/courses" class="btn btn-primary">Katalog Kelas</a>
+    </div>
+  <% } %>
+</div>
+<%- include('../layouts/footer'); %>

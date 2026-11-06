@@ -1,0 +1,52 @@
+<%- include('../layouts/header'); %>
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+  <div>
+    <h2><%= course.title %></h2>
+    <p class="text-muted">Pengajar: <strong><%= course.teacher_name %></strong> | Siswa terdaftar: <strong><%= studentCount %></strong></p>
+  </div>
+  <div class="d-flex gap-2">
+    <% if (user && user.role === 'teacher' && course.teacher_id == user.id) { %>
+      <a href="/courses/<%= course.id %>/edit" class="btn btn-warning">Edit</a>
+      <form action="/courses/<%= course.id %>?_method=DELETE" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus kelas ini?');">
+        <button type="submit" class="btn btn-danger">Hapus</button>
+      </form>
+    <% } else if (user && user.role === 'student') { %>
+      <% if (enrolled) { %>
+        <a href="/enrollments" class="btn btn-success">Lihat Kelas Saya</a>
+      <% } else { %>
+        <form action="/enrollments/<%= course.id %>/enroll" method="POST">
+          <button type="submit" class="btn btn-primary">Daftar Kelas Ini</button>
+        </form>
+      <% } %>
+    <% } else { %>
+      <a href="/login" class="btn btn-outline-primary">Login untuk mendaftar</a>
+    <% } %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="card shadow">
+      <div class="card-body">
+        <p><%= course.description || 'Tidak ada deskripsi.' %></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow">
+      <div class="card-header"><h6>Daftar Siswa</h6></div>
+      <div class="card-body">
+        <% if (students && students.length > 0) { %>
+          <ul class="list-group list-group-flush">
+            <% students.forEach((s) => { %>
+              <li class="list-group-item"><%= s.name %> (<%= s.email %>)</li>
+            <% }); %>
+          </ul>
+        <% } else { %>
+          <p class="text-muted small">Belum ada siswa terdaftar.</p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../layouts/footer'); %>
