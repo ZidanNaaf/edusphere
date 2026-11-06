@@ -5,7 +5,7 @@ const flash = require('connect-flash');
 const methodOverride = require('method-override');
 
 const db = require('./config/db');
-const initDatabase = require('./database/init');
+require('./database/init');
 
 const authRoutes = require('./routes/authRoutes');
 const courseRoutes = require('./routes/courseRoutes');
@@ -13,8 +13,6 @@ const enrollmentRoutes = require('./routes/enrollmentRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-initDatabase();
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -42,6 +40,30 @@ app.use((req, res, next) => {
 app.use('/', authRoutes);
 app.use('/courses', courseRoutes);
 app.use('/enrollments', enrollmentRoutes);
+
+const { auth, teacher, student } = require('./middleware/authMiddleware');
+
+app.get('/dashboard/teacher', auth, teacher, (req, res) => {
+  const Course = require('./models/Course');
+  Course.findByTeacher(req.session.user.id, (err, courses) => {
+    if (err) {
+      req.flash('error_msg', 'Gagal memuat daftar kelas.');
+      return res.render('dashboard/teacher', { courses: [] });
+    }
+    res.render('dashboard/teacher', { courses: courses || [] });
+  });
+});
+
+app.get('/dashboard/student', auth, student, (req, res) => {
+  const Course = require('./models/Course');
+  Course.findAll((err, courses) => {
+    if (err) {
+      req.flash('error_msg', 'Gagal memuat katalog kelas.');
+      return res.render('dashboard/student', { courses: [] });
+    }
+    res.render('dashboard/student', { courses: courses || [] });
+  });
+});
 
 app.get('/', (req, res) => {
   if (req.session.user) {
